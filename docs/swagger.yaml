@@ -1,0 +1,205 @@
+openapi: 3.0.0
+info:
+  title: CRUD Candidates API
+  description: API para gestionar candidatos
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /candidatos:
+    get:
+      summary: Obtener todos los candidatos
+      description: Devuelve una lista de todos los candidatos.
+      responses:
+        '200':
+          description: Lista de candidatos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Candidate'
+    post:
+      summary: Crear un nuevo candidato
+      description: Crea un nuevo candidato en la base de datos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CandidateDto'
+      responses:
+        '201':
+          description: Candidato creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidate'
+        '400':
+          description: Error de validación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '409':
+          description: Conflicto por duplicado (correo o teléfono)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Error al crear el candidato
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /candidatos/{id}:
+    get:
+      summary: Obtener un candidato por ID
+      description: Devuelve los detalles de un candidato específico.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID del candidato
+      responses:
+        '200':
+          description: Candidato encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidate'
+        '404':
+          description: Candidato no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    put:
+      summary: Actualizar un candidato
+      description: Actualiza la información de un candidato existente.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID del candidato
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CandidateDto'
+      responses:
+        '200':
+          description: Candidato actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidate'
+        '400':
+          description: Error de validación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Candidato no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Error al actualizar el candidato
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    delete:
+      summary: Eliminar un candidato
+      description: Elimina un candidato de la base de datos.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID del candidato
+      responses:
+        '200':
+          description: Candidato eliminado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Candidato no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Error al eliminar el candidato
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+components:
+  schemas:
+    Candidate:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        salary:
+          type: number
+          format: float
+        gender:
+          type: string
+    CandidateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        salary:
+          type: number
+          format: float
+        gender:
+          type: string

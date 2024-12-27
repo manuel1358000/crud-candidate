@@ -3,15 +3,14 @@ package models
 
 import(
 	"crud-candidates/dtos"
-	"github.com/segmentio/ksuid"
 )
 
 type Candidates struct {
-	ID        uint   `gorm:"primary_key"`
-	Name      string
-	Email     string
-	Gender    string
-	Salary    float64
+	ID        int     `gorm:"primaryKey;autoIncrement"`
+	Name      string  `gorm:"type:varchar(255);not null"`
+	Email     string  `gorm:"type:varchar(255);unique;not null"`
+	Gender    string  `gorm:"type:varchar(50)"`
+	Salary    float64 `gorm:"type:decimal(10,2);not null"`
 }
 
 
@@ -29,7 +28,7 @@ func (candidate *Candidates) MapCandidateDtoFromCandidate() *dtos.CandidateDto {
 }
 
 
-func (listOfCandidates ListOfCandidates) MapCandidateDtoFromCandidates() []dtos.CandidateDto {
+func (listOfCandidates ListOfCandidates) MapCandidateDtoFromCandidates() []*dtos.CandidateDto {
 	var candidateDtos []*dtos.CandidateDto
 	for _, candidate := range listOfCandidates {
 		candidateDtos = append(candidateDtos, candidate.MapCandidateDtoFromCandidate())
@@ -39,12 +38,10 @@ func (listOfCandidates ListOfCandidates) MapCandidateDtoFromCandidates() []dtos.
 
 
 func NewCandidate(candidateDto *dtos.CandidateDto) *Candidates {
-	id := ksuid.New().String()
 	return &Candidates{
-		ID:		id,
 		Name:      candidateDto.Name,
-		Email:     candidate.Email,
-		Gender:    candidate.Gender,
-		Salary:   candidate.Salary,
+		Email:     candidateDto.Email,
+		Gender:    candidateDto.Gender,
+		Salary:   candidateDto.Salary,
 	}
 }
