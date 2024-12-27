@@ -24,6 +24,20 @@ func (controller *CandidateController) CreateCandidate(c *gin.Context) {
         return
     }
 
+    requiredFields := map[string]interface{}{
+        "Name":   candidateDTO.Name,
+        "Email":  candidateDTO.Email,
+        "Salary": candidateDTO.Salary,
+        "Gender": candidateDTO.Gender,
+    }
+
+    for field, value := range requiredFields {
+        if isEmpty(value) {
+            c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("El campo '%s' es obligatorio", field)})
+            return
+        }
+    }
+
     var existingCandidate []models.Candidates
     err := controller.repo.GetCandidatesDuplicate(c, &existingCandidate, candidateDTO.Email)
     if err != nil {
@@ -47,13 +61,14 @@ func (controller *CandidateController) CreateCandidate(c *gin.Context) {
 
     if err := controller.repo.CreateCandidate(c, &candidate); err != nil {
         fmt.Println("Error al crear candidato:", err)
-        c.Error(fmt.Errorf("Error al verificar duplicados: %v", err))
+        c.Error(fmt.Errorf("Error al crear candidato: %v", err))
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al crear el candidato"})
         return
     }
 
     c.JSON(http.StatusCreated, candidate)
 }
+
 
 func (controller *CandidateController) GetCandidates(c *gin.Context) {
     var candidates []models.Candidates
@@ -107,4 +122,18 @@ func (controller *CandidateController) DeleteCandidate(c *gin.Context) {
     }
 
     c.JSON(http.StatusOK, gin.H{"message": "Candidato eliminado"})
+}
+
+
+func isEmpty(value interface{}) bool {
+    switch v := value.(type) {
+    case string:
+        return v == ""
+    case float64:
+        return v == 0
+    case nil:
+        return true
+    default:
+        return false
+    }
 }
