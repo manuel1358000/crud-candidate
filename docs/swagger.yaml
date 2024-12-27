@@ -44,7 +44,7 @@ paths:
                   error:
                     type: string
         '409':
-          description: Conflicto por duplicado (correo o teléfono)
+          description: Conflicto por duplicado (correo)
           content:
             application/json:
               schema:

@@ -34,7 +34,7 @@ func (controller *CandidateController) CreateCandidate(c *gin.Context) {
     }
 
     if len(existingCandidate) > 0 {
-        c.JSON(http.StatusConflict, gin.H{"error": "Ya existe un candidato con el mismo correo o teléfono"})
+        c.JSON(http.StatusConflict, gin.H{"error": "Ya existe un candidato con el mismo correo"})
         return
     }
 
