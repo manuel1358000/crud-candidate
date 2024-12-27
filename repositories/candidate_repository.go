@@ -69,7 +69,7 @@ func (dao *CandidateDao) UpdateCandidate(c *gin.Context, candidate *models.Candi
 		return err
 	}
 
-	if err := dao.DB.Model(&existingCandidate).Updates(candidate).Error; err != nil {
+	if err := dao.DB.Model(&candidate).Updates(candidate).Error; err != nil {
 		return err
 	}
 	return nil
