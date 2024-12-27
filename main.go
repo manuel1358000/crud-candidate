@@ -9,6 +9,7 @@ import (
 	"github.com/swaggo/files"
     "github.com/swaggo/gin-swagger"
     _ "crud-candidates/docs"
+	 "os"
 
 )
 
@@ -32,6 +33,9 @@ func main(){
 	 r.GET("/ping", healthController.Ping)
 
 	 routers.RegisterCandidateRouters(r, candidateController)
- 
-	 r.Run(":8080")
+	 port := os.Getenv("PORT")
+	 if port == "" {
+		 port = "8080"
+	 }
+	 r.Run(":" + port)
 }
