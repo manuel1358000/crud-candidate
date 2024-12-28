@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "4749393d-990a-45cb-aacf-f62f221e873e",
+		"name": "RETO_TECNICO_SEEK_MANUEL_FUENTES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38098897"
+	},
+	"item": [
+		{
+			"name": "GET ALL CANDIDATES - 200",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzUzNjIxNTMsImlhdCI6MTczNTM1ODU1MywidXNlcl9pZCI6ImFkbWluIn0.FR2dtdPDRvU1nAONwCdOdIkbHoQzlTQtCkt2SkWjAIA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/candidates/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"candidates",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL CANDIDATES - 500",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzUzNjIxNTMsImlhdCI6MTczNTM1ODU1MywidXNlcl9pZCI6ImFkbWluIn0.FR2dtdPDRvU1nAONwCdOdIkbHoQzlTQtCkt2SkWjAIA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/candidates/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"candidates",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET CANDIDATES BY ID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE CANDIDATES BY ID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "PUT CANDIDATE BY ID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Username\": \"admin\",\n    \"Password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
