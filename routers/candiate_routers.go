@@ -5,13 +5,12 @@ import (
     "github.com/gin-gonic/gin"
 )
 
-func RegisterCandidateRouters(r *gin.Engine, controller *controllers.CandidateController) {
-    candidates := r.Group("/candidates")
+func RegisterCandidateRouters(rg *gin.RouterGroup, controller *controllers.CandidateController) {
     {
-        candidates.POST("/", controller.CreateCandidate)
-        candidates.GET("/", controller.GetCandidates)
-        candidates.GET("/:id", controller.GetCandidate)
-        candidates.PUT("/:id", controller.UpdateCandidate)
-        candidates.DELETE("/:id", controller.DeleteCandidate)
+        rg.POST("/", controller.CreateCandidate)
+        rg.GET("/", controller.GetCandidates)
+        rg.GET("/:id", controller.GetCandidate)
+        rg.PUT("/:id", controller.UpdateCandidate)
+        rg.DELETE("/:id", controller.DeleteCandidate)
     }
 }

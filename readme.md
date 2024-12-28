@@ -21,6 +21,7 @@ DB_NAME=candidates_db
 DB_HOST=localhost
 DB_PORT=5432
 DB_SSLMODE=disable
+SECRET_KEY=secret
 ```
 
 > **Nota:** Estas variables deben coincidir con las configuraciones del archivo `docker-compose.yaml`.
