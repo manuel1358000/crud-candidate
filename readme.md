@@ -1,18 +1,19 @@
-# Proyecto CRUD Candidates
 
-Este proyecto es una aplicación en Go que permite gestionar candidatos. A continuación, se detallan los pasos necesarios para ejecutar el proyecto en tu entorno local.
+# CRUD Candidates Project
 
-## Requisitos previos
+This project is a Go application that allows you to manage candidates. Below are the steps required to run the project in your local environment.
 
-- Tener instalado [Docker](https://www.docker.com/) y [Docker Compose](https://docs.docker.com/compose/).
-- Tener instalado [Flyway](https://flywaydb.org/).
-- Tener instalado [Go](https://golang.org/).
+## Prerequisites
 
-## Pasos para ejecutar el proyecto
+- Have [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed.
+- Have [Flyway](https://flywaydb.org/) installed.
+- Have [Go](https://golang.org/) installed.
 
-### 1. Crear el archivo `.env`
+## Steps to Run the Project
 
-Crea un archivo `.env` en el directorio raíz del proyecto con el siguiente contenido:
+### 1. Create the `.env` file
+
+Create a `.env` file in the root directory of the project with the following content:
 
 ```
 DB_USER=crud-candidates
@@ -24,19 +25,19 @@ DB_SSLMODE=disable
 SECRET_KEY=secret
 ```
 
-> **Nota:** Estas variables deben coincidir con las configuraciones del archivo `docker-compose.yaml`.
+> **Note:** These variables should match the configurations in the `docker-compose.yaml` file.
 
-### 2. Levantar el contenedor de PostgreSQL
+### 2. Start the PostgreSQL container
 
-Ejecuta el siguiente comando para iniciar el contenedor con la instancia de PostgreSQL:
+Run the following command to start the container with the PostgreSQL instance:
 
 ```bash
 docker-compose up -d
 ```
 
-### 3. Configurar las variables de entorno para Flyway
+### 3. Set up environment variables for Flyway
 
-Establece las siguientes variables de entorno en tu computadora:
+Set the following environment variables on your computer:
 
 ```bash
 export FLYWAY_URL=jdbc:postgresql://localhost:5432/candidates_db
@@ -46,26 +47,26 @@ export FLYWAY_SCHEMAS=public
 export FLYWAY_LOCATIONS=filesystem:./sql
 ```
 
-### 4. Ejecutar las migraciones con Flyway
+### 4. Run migrations with Flyway
 
-Con las variables configuradas, ejecuta el siguiente comando para aplicar las migraciones iniciales:
+With the variables set, run the following command to apply the initial migrations:
 
 ```bash
 flyway migrate
 ```
 
-### 5. Ejecutar el proyecto
+### 5. Run the project
 
-Ejecuta el siguiente comando para iniciar el proyecto:
+Run the following command to start the project:
 
 ```bash
 go run main.go
 ```
 
-### 6. Probar la API con Postman
+### 6. Test the API with Postman
 
-Puedes utilizar la colección de Postman proporcionada para realizar consultas y probar las funcionalidades del proyecto.
+You can use the provided Postman collection to make queries and test the project’s functionalities.
 
 ---
 
-¡Listo! Ahora puedes utilizar el proyecto CRUD Candidates en tu entorno local.
+Done! You can now use the CRUD Candidates project in your local environment.
