@@ -7,6 +7,7 @@ import (
     "github.com/gin-gonic/gin"
     "net/http"
     "fmt"
+     "strconv"
 )
 
 type CandidateController struct {
@@ -91,7 +92,6 @@ func (controller *CandidateController) GetCandidate(c *gin.Context) {
 
     c.JSON(http.StatusOK, result)
 }
-
 func (controller *CandidateController) UpdateCandidate(c *gin.Context) {
     var candidateDTO dtos.CandidateDto
     if err := c.ShouldBindJSON(&candidateDTO); err != nil {
@@ -99,7 +99,15 @@ func (controller *CandidateController) UpdateCandidate(c *gin.Context) {
         return
     }
 
+    idStr := c.Param("id")
+    id, err := strconv.Atoi(idStr)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "ID inválido"})
+        return
+    }
+
     candidate := models.Candidates{
+        ID:       id,
         Name:     candidateDTO.Name,
         Email:    candidateDTO.Email,
         Salary:   candidateDTO.Salary,
@@ -111,8 +119,11 @@ func (controller *CandidateController) UpdateCandidate(c *gin.Context) {
         return
     }
 
-    c.JSON(http.StatusOK, candidate)
+    c.JSON(http.StatusOK, gin.H{
+        "message": "El candidato se actualizó correctamente",
+    })
 }
+
 
 func (controller *CandidateController) DeleteCandidate(c *gin.Context) {
     var candidate models.Candidates

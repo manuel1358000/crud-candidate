@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"fmt"
 )
 
 func NewCandidateRepository(db *gorm.DB) *CandidateDao {
@@ -60,19 +61,35 @@ func (dao *CandidateDao) GetCandidate(c *gin.Context, candidate *models.Candidat
 }
 
 func (dao *CandidateDao) UpdateCandidate(c *gin.Context, candidate *models.Candidates) error {
-	id := c.Param("id")
-	var existingCandidate models.Candidates
-	if err := dao.DB.First(&existingCandidate, "id = ?", id).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return errors.New("candidato no encontrado")
+    id := c.Param("id")
+    var existingCandidate models.Candidates
+    
+    if err := dao.DB.First(&existingCandidate, "id = ?", id).Error; err != nil {
+        if errors.Is(err, gorm.ErrRecordNotFound) {
+            return errors.New("candidato no encontrado")
+        }
+        return err
+    }
+	
+		if candidate.Name != "" {
+			existingCandidate.Name = candidate.Name
 		}
-		return err
-	}
-
-	if err := dao.DB.Model(&candidate).Updates(candidate).Error; err != nil {
-		return err
-	}
-	return nil
+		if candidate.Email != "" {
+			existingCandidate.Email = candidate.Email
+		}
+		if candidate.Salary != 0 {
+			existingCandidate.Salary = candidate.Salary
+		}
+		if candidate.Gender != "" {
+			existingCandidate.Gender = candidate.Gender
+		}
+	
+		fmt.Println("Error al crear candidato:", existingCandidate)
+		if err := dao.DB.Save(&existingCandidate).Error; err != nil {
+			return err
+		}
+	
+		return nil
 }
 
 func (dao *CandidateDao) DeleteCandidate(c *gin.Context, candidate *models.Candidates) error {
